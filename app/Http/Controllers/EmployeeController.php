@@ -22,14 +22,14 @@ class EmployeeController extends Controller
     public function store(Request $request){
         
         $validate = Validator::make($request->all(),[
-            'name' => 'required',
-            'email' => 'required|email',
-            'phone' => 'required',
-            'address' => 'required',
-            'experience' => 'required',
-            'salary' => 'required',
+            'photo' => 'required|image',
             'city' => 'required',
-            'photo' => 'required|image'
+            'salary' => 'required',
+            'experience' => 'required',
+            'address' => 'required',
+            'phone' => 'required',
+            'email' => 'required|email|unique:employes,email',
+            'name' => 'required',
             ]);
             $photo = $request->file('photo');
         if ($validate->passes()) {
