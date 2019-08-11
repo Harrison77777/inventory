@@ -1,5 +1,41 @@
 @extends('layouts.master')
 @push('css')
+
+<style type="text/css">
+    #image-preview {
+      width: 200px;
+      height: 200px;
+      position: relative;
+      overflow: hidden;
+      background-color: #ffffff;
+      color: #ecf0f1;
+    }
+    #image-preview input {
+      line-height: 200px;
+      font-size: 200px;
+      position: absolute;
+      opacity: 0;
+      z-index: 10;
+    }
+    #image-preview label {
+      position: absolute;
+      z-index: 5;
+      opacity: 0.8;
+      cursor: pointer;
+      background-color: #bdc3c7;
+      width: 200px;
+      height: 50px;
+      font-size: 20px;
+      line-height: 50px;
+      text-transform: uppercase;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+      text-align: center;
+    }
+    </style>
 @endpush
  @section('content')
  <div id="right-panel" class="right-panel">
@@ -80,11 +116,18 @@
                             <textarea id="address" placeholder="Email address" name="address" class="form-control"></textarea>
                             <span class="text-danger">{{$errors->first('address')}}</span>
                         </div>
-                        <div class="form-group">
-                            <label for="photo" class=" form-control-label">Email address</label>
-                            <input type="file" id="photo" name="photo" class="form-control">
+                        
+                        {{--  <div class="form-group">
+                            <label for="photo" class=" form-control-label">Employee photo</label>
+                            <input  type="file" id="photo" accept="image/*" name="photo" class="form-control">
                             <span class="text-danger">{{$errors->first('photo')}}</span>
+                        </div>  --}}
+
+                        <div id="image-preview">
+                            <label for="image-upload" id="image-label">Choose File</label>
+                            <input type="file" name="photo" accept="image/*" id="image-upload" />
                         </div>
+
                         <button type="submit" class="btn btn-success btn-block">Save change</button>
                     </form>
                     <div style="display:none;" class="col-sm-12 mt-1 errorMsg">
@@ -99,7 +142,7 @@
 </div><!-- /#right-panel -->
 @endsection
 @push('js')
-
+<script src="{{asset('application_css_js/jquery.uploadPreview.min.js')}}"></script>
 <script>
 
 jQuery(document).ready(function($) {
@@ -122,7 +165,7 @@ jQuery(document).ready(function($) {
         var phone = $('#phone').val();
         var salary = $('#salary').val();
         var experience = $('#experience').val();
-        var photo = $('#photo').val();
+        var photo = $('#image-upload').val();
 
         form = $('#addEmployeeForm');
          $.ajax({
@@ -146,7 +189,7 @@ jQuery(document).ready(function($) {
                     var phone = $('#phone').val('');
                     var salary = $('#salary').val('');
                     var experience = $('#experience').val('');
-                    var photo = $('#photo').val(''); 
+                    var photo = $('#image-upload').val(''); 
                 }else{
                      $('.successMsg').hide(); 
                      $('.errorMsg').show(); 
@@ -158,7 +201,14 @@ jQuery(document).ready(function($) {
         }); 
         
     });
+
+    $.uploadPreview({
+        input_field: "#image-upload",
+        preview_box: "#image-preview",
+        label_field: "#image-label"
+      });
 })
+
 </script>
   
 @endpush
