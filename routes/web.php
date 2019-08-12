@@ -16,6 +16,10 @@ Route::group(['prefix' => '/', 'middleware'=> 'auth:web'], function(){
      route::get('employee', 'EmployeeController@index')->name('employees');
      route::get('create/employee', 'EmployeeController@create')->name('create.employee');
      route::post('add/employee', 'EmployeeController@store')->name('store.employee');
+     route::get('employee/details/{employeeId}', 'EmployeeController@details')->name('employee.details');
+     route::delete('employee/delete/{employeeId}', 'EmployeeController@delete')->name('employee.delete');
+     route::get('employee/edit/{employeeId}', 'EmployeeController@edit')->name('employee.edit');
+     route::post('employee/update/{employeeId}', 'EmployeeController@update')->name('employee.update');
 });
 
 Auth::routes();

@@ -79,7 +79,7 @@
                     <strong>Employee Register</strong><small> Form</small>
                 </div>
                 <div class="card-body card-block">
-                    <form id="addEmployeeForm" class="addEmployeeForm" action="{{route('store.employee')}}" method="POST" enctype="multipart/form-data">
+                    <form id="addEmployeeForm" class="addEmployeeForm" action="{{route('store.employee')}}"     method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label for="name" class=" form-control-label">Name</label>
@@ -87,6 +87,7 @@
                             <span class="text-danger">{{$errors->first('name')}}</span>
                         </div>
                         <div class="form-group">
+                            
                             <label for="email" class=" form-control-label">Email address</label>
                             <input type="text" id="email" value="{{old('email')}}" placeholder="Email address" name="email" class="form-control">
                             <span class="text-danger">{{$errors->first('email')}}</span>
@@ -124,16 +125,15 @@
                         </div>  --}}
 
                         <div id="image-preview">
-                            <label for="image-upload" id="image-label">Choose File</label>
+                            <label for="image-upload" id="image-label">Choose Photo</label>
                             <input type="file" name="photo" accept="image/*" id="image-upload" />
                         </div>
-
                         <button type="submit" class="btn btn-success btn-block">Save change</button>
                     </form>
                     <div style="display:none;" class="col-sm-12 mt-1 errorMsg">
-                            <div class="alert  alert-danger alert-dismissible fade show" role="alert">
-                                <span class="badge badge-pill"></span> <span class="ErrorMessage"></span> 
-                            </div>
+                        <div class="alert  alert-danger alert-dismissible fade show" role="alert">
+                            <span class="badge badge-pill"></span> <span class="ErrorMessage"></span> 
+                        </div>
                     </div>
                 </div>
             </div>
