@@ -15,35 +15,43 @@
     <!-- Header-->
     @include('partials.dashboard-header')
     <!-- Header-->
-
     <div class="breadcrumbs">
-        <div class="col-sm-4">
-            <div class="page-header float-left">
-                <div class="page-title">
-                    <h1>Manage Employees</h1>
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Manage Customers</h1>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-8">
-            <div class="page-header float-right">
-                <div class="page-title">
-                    <ol class="breadcrumb text-right">
-                        <li class="active"><a class="btn btn-outline-info btn-sm" href="{{route('create.employee')}}">Add employee</a></li>
-                    </ol>
+            <div class="col-sm-8">
+                <div class="page-header float-right">
+                    <div class="page-title">
+                        <ol class="breadcrumb text-right">
+                            <li class="active"><a class="btn btn-info btn-sm" href="{{route('create.customer')}}">Add Customer</a></li>
+                        </ol>
+                    </div>
                 </div>
             </div>
-        </div>
     </div>
-
-    <div class="content mt-3">
+    <div  class="col-sm-10 offset-1">
+        @if (Session::has('successMsg'))
+        <div class="alert  alert-success alert-dismissible fade show" role="alert">
+            <span class="badge badge-pill badge-success">Success</span> <span class="message">{{session('successMsg')}}</span> 
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        @endif
+    </div>
+    <div class="content">
         <div class="col-md-12 col-lg-12">
             <div class="animated fadeIn">
                 <div class="row">
 
                     <div class="col-md-12">
-                        <div class="card">
+                       <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">All Employees</strong>
+                                <strong class="card-title">All Customer</strong>
                             </div>
                             <div class="card-body">
                                 <table id="bootstrap-data-table-export" class="table table-sm">
@@ -52,44 +60,35 @@
                                             <th>Name</th>
                                             <th>Email</th>
                                             <th>Phone</th>
-                                            <th>Salary</th>
-                                            <th>City</th>
-                                            <th>Photo</th>
-                                            <th>Experience</th>
+                                            <th>Shop_or_company</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($employees as $employee)
+                                        @foreach ($customers as $customer)
                                             <tr class="text-center">
-                                                <td><h6 class="mt-2 text-muted">{{$employee->name}}</h6></td>
-                                                <td><h6 class="mt-2 text-muted">{{$employee->email}}</h6></td>
-                                                <td><h6 class="mt-2 text-muted">{{$employee->phone}}</h6></td>
-                                                <td><h6 class="mt-2 text-muted">{{$employee->salary}}</h6></td>
-                                                <td><h6 class="mt-2 text-muted">{{$employee->city}}</h6></td>
+                                                <td><h6 class="mt-2 text-muted">{{$customer->name}}</h6></td>
+                                                <td><h6 class="mt-2 text-muted">{{$customer->email}}</h6></td>
+                                                <td><h6 class="mt-2 text-muted">{{$customer->phone}}</h6></td>
                                                 <td>
-                                                    <img width="50" height="40" src="{{asset('storage/employeesPhoto/'.$employee->photo)}}" alt="">
-                                                </td>
-                                                <td><h6 class="mt-2 text-muted">{{$employee->experience}}</h6></td>
+                                                    <h6 class="mt-2 text-muted">
+                                                        {{$customer->shop_or_company}}
+                                                    </h6>
+                                                </td>  
                                                 <td>
-                                                    <a class="btn btn-info btn-sm mt-1" href="{{route('employee.details',Crypt::encrypt($employee->id))}}">Details</a>
-
-                                                    <a class="btn btn-primary btn-sm mt-1" href="{{route('employee.edit',$employee->id)}}">Edit</a>
-
-                                                    <button type="button" onclick="deleteEmployee({{$employee->id}});" class="btn btn-danger btn-sm mt-1">Delete</button>
-
-                                                    <form style="display:none;" id="deleteForm-{{$employee->id}}" method="POST" action="{{route('employee.delete', $employee->id)}}">
+                                                    <a class="btn btn-info btn-sm mt-1" href="{{route('details.customer', $customer->id)}}">Details</a>
+                                                    <button type="button" onclick="deleteCustomerAlert({{$customer->id}});" class="btn btn-danger btn-sm mt-1">Delete</button>
+                                                    <form style="display:none;" id="deleteCustomerForm-{{$customer->id}}" method="POST" action="{{route('delete.customer', $customer->id)}}">
                                                         @csrf
                                                         @method("DELETE")
                                                     </form>
                                                 </td>
                                             </tr>
-                                        @endforeach
-                                       
+                                        @endforeach                                      
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
+                        </div> -
                     </div>
 
 
@@ -103,7 +102,7 @@
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 <script>
-        function deleteEmployee(id){
+        function deleteCustomerAlert(id){
             const swalWithBootstrapButtons = Swal.mixin({
                 customClass: {
                   confirmButton: 'btn btn-success',
@@ -124,7 +123,7 @@
                 if (result.value) {
 
                  event.preventDefault();
-                 document.getElementById('deleteForm-'+id).submit();
+                 document.getElementById('deleteCustomerForm-'+id).submit();
 
                 } else if (
                   /* Read more about handling dismissals below */
@@ -144,10 +143,6 @@
             select: false
         });
     })
-
-
-
     
-
 </script>
 @endpush

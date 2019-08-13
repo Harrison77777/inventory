@@ -20,6 +20,20 @@ Route::group(['prefix' => '/', 'middleware'=> 'auth:web'], function(){
      route::delete('employee/delete/{employeeId}', 'EmployeeController@delete')->name('employee.delete');
      route::get('employee/edit/{employeeId}', 'EmployeeController@edit')->name('employee.edit');
      route::post('employee/update/{employeeId}', 'EmployeeController@update')->name('employee.update');
+     //Customer all route group
+     Route::group(['prefix'=> 'customer'], function(){
+          route::get('/all', 'CustomerController@index')->name('all.customer');
+          route::get('/create', 'CustomerController@create')->name('create.customer');
+          route::post('store', 'CustomerController@store')->name('store.customer');
+          route::delete('delete/{customerId}', 'CustomerController@delete')->name('delete.customer');
+          route::get('details/{customerId}', 'CustomerController@details')->name('details.customer');
+     });
+     //Customer all route ended here.
+
+     //Supplier all route group
+     Route::group(['prefix'=> 'supplier'], function(){
+          route::get('all', 'SupplierController@index')->name('all.supplier');
+     });
 });
 
 Auth::routes();
