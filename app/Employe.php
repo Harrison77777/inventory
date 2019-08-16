@@ -16,4 +16,13 @@ class Employe extends Model
         'city',
         'photo',
     ];
+
+    public function advance_salary()
+    {
+        return $this->hasMany(AdvanceSalary::class);
+    }
+    public function salary()
+    {
+        return $this->hasMany(Salary::class);
+    }
 }

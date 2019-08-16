@@ -33,7 +33,33 @@ Route::group(['prefix' => '/', 'middleware'=> 'auth:web'], function(){
      //Supplier all route group
      Route::group(['prefix'=> 'supplier'], function(){
           route::get('all', 'SupplierController@index')->name('all.supplier');
+          route::get('create', 'SupplierController@create')->name('create.supplier');
+          route::post('add', 'SupplierController@store')->name('store.supplier');
+          route::get('edit/{supplierId}', 'SupplierController@edit')->name('edit.supplier');
+          route::patch('update/{supplierId}', 'SupplierController@update')->name('update.supplier');
+          route::get('details/{supplierId}', 'SupplierController@details')->name('details.supplier');
+          route::delete('delete/{supplierId}', 'SupplierController@delete')->name('delete.supplier');
      });
+     
+     //Supplier all route group ended here
+
+     // Salary manage route group here
+     Route::group(['prefix'=> 'salary'], function(){
+          route::get('all', 'SalaryController@index')->name('all.salary');
+          route::get('pay/advance', 'SalaryController@payAdvanceSalary')->name('pay.advance.salary');
+          route::post('advance/accept', 'SalaryController@AcceptAdvanceSalary')->name('accept.advance.salary');
+     });
+     // Salary manage route group ended here
+     // Category route group here
+     Route::group(['prefix'=> 'category'], function(){
+          route::get('all', 'CategoryController@index')->name('all.category');
+          route::delete('delete/{catId}', 'CategoryController@delete')->name('delete.category');
+          route::get('create', 'CategoryController@create')->name('create.category');
+          route::post('add', 'CategoryController@store')->name('add.category');
+          route::get('edit/{catId}', 'CategoryController@edit')->name('edit.category');
+          route::post('update/{catId}', 'CategoryController@update')->name('update.category');
+     });
+     // Category route group ended here 
 });
 
 Auth::routes();

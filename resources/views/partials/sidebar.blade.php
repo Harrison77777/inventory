@@ -25,6 +25,14 @@
                 <a href="{{route('all.supplier')}}"> <i class="menu-icon fa fa-road"></i>Supplier
                 </a>
                 </li>
+                <li class="{{Request::is('salary*') ? 'active' : ''}}">
+                <a href="{{route('all.salary')}}"> <i class="menu-icon fa fa-road"></i>Manage Salary
+                </a>
+                </li>
+                <li class="{{Request::is('category*') ? 'active' : ''}}">
+                <a href="{{route('all.category')}}"> <i class="menu-icon fa fa-road"></i>Manage Product Category
+                </a>
+                </li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </nav>

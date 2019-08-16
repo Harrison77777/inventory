@@ -60,4 +60,5 @@ class CustomerController extends Controller
         \session()->flash('successMsg', 'Successfully you have deleted a customer :)');
         return redirect()->back();
     }
+   
 }
