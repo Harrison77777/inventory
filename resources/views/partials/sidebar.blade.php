@@ -12,25 +12,33 @@
         <div id="main-menu" class="main-menu collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li class="{{Request::is('dashboard*') ? 'active' : ''}}">
-                    <a href="{{route('dashboard')}}"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
+                    <a style="color:{{Request::is('dashboard*') ? 'red!important;' : ''}}" href="{{route('dashboard')}}"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
                 </li>
                 <li class="{{Request::is('employee*') ? 'active' : ''}}">
-                    <a href="{{route('employees')}}"> <i class="menu-icon fa fa-users"></i>Manage Employee</a>
+                    <a style="color:{{Request::is('employee*') ? 'red!important;' : ''}}" href="{{route('employees')}}"> <i class="menu-icon fa fa-users"></i>Manage Employees</a>
                 </li>
                 <li class="{{Request::is('customer*') ? 'active' : ''}}">
-                <a  style="color:" href="{{route('all.customer')}}"> <i class="menu-icon fa fa-h-square"></i>Manage Customer
+                <a style="color:{{Request::is('customer*') ? 'red!important;' : ''}}" style="color:" href="{{route('all.customer')}}"> <i class="menu-icon fa fa-h-square"></i>Manage Customer
                 </a>
                 </li>
                 <li class="{{Request::is('supplier*') ? 'active' : ''}}">
-                <a href="{{route('all.supplier')}}"> <i class="menu-icon fa fa-road"></i>Supplier
+                <a style="color:{{Request::is('supplier*') ? 'red!important;' : ''}}" href="{{route('all.supplier')}}"> <i class="menu-icon fa fa-road"></i>Suppliers
                 </a>
                 </li>
                 <li class="{{Request::is('salary*') ? 'active' : ''}}">
-                <a href="{{route('all.salary')}}"> <i class="menu-icon fa fa-road"></i>Manage Salary
+                <a style="color:{{Request::is('salary*') ? 'red!important;' : ''}}" href="{{route('all.salary')}}"> <i class="menu-icon fa fa-money"></i>Manage Salaries
                 </a>
                 </li>
-                <li class="{{Request::is('category*') ? 'active' : ''}}">
-                <a href="{{route('all.category')}}"> <i class="menu-icon fa fa-road"></i>Manage Product Category
+                <li  class="{{Request::is('category*') ? 'active' : ''}}">
+                <a style="color:{{Request::is('category*') ? 'red!important;' : ''}}" href="{{route('all.category')}}"> <i class="menu-icon fa fa-folder-open"></i>Manage Product Category
+                </a>
+                </li>
+                <li class="{{Request::is('product*') ? 'active' : ''}}">
+                <a style="color:{{Request::is('product*') ? 'red!important;' : ''}}" href="{{route('all.product')}}"> <i class="menu-icon fa fa-truck"></i>Manage Products 
+                </a>
+                </li>
+                <li class="{{Request::is('expanse*') ? 'active' : ''}}">
+                <a style="color:{{Request::is('expanse*') ? 'red!important;' : ''}}" href="{{route('all.expanse')}}"> <i class="menu-icon fa fa-strikethrough"></i>Manage Expanses 
                 </a>
                 </li>
             </ul>

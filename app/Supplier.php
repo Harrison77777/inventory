@@ -16,5 +16,10 @@ class Supplier extends Model
         'Main_supplier_or_distributor',
         'photo',
         'payment_way',
+        'storage_no',
     ];
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }

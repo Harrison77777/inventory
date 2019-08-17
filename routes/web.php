@@ -60,6 +60,28 @@ Route::group(['prefix' => '/', 'middleware'=> 'auth:web'], function(){
           route::post('update/{catId}', 'CategoryController@update')->name('update.category');
      });
      // Category route group ended here 
+     // product route group here
+     Route::group(['prefix'=> 'product'], function(){
+          route::get('all', 'ProductController@index')->name('all.product');
+          route::get('details/{proId}', 'ProductController@details')->name('details.product');
+          route::delete('delete/{proId}', 'ProductController@delete')->name('delete.product');
+          route::get('create', 'ProductController@create')->name('create.product');
+          route::post('add', 'ProductController@store')->name('add.product');
+          route::get('edit/{proId}', 'ProductController@edit')->name('edit.product');
+          route::post('update/{proId}', 'ProductController@update')->name('update.product');
+     });
+     // product route group ended here 
+     // Expanse route group here
+     Route::group(['prefix'=> 'expanse'], function(){
+          route::get('all', 'ExpanseController@index')->name('all.expanse');
+          route::get('details/{expId}', 'ExpanseController@details')->name('details.expanse');
+          route::get('create', 'ExpanseController@create')->name('create.expanse');
+          route::get('of-today', 'ExpanseController@todayExpanse')->name('today.expanse');
+          route::post('add', 'ExpanseController@store')->name('add.expanse');
+       
+          
+     });
+     // Expanse route group ended here 
 });
 
 Auth::routes();

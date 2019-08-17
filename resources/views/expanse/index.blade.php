@@ -14,12 +14,18 @@
 
     <!-- Header-->
     @include('partials.dashboard-header')
+    <div class="row">
+        <div class="container">
+            <a class="btn btn-success btn-sm ml-3 mb-1" href="{{route('today.expanse')}}">Today all expanses</a>
+        </div>
+        
+    </div>
     <!-- Header-->
     <div class="breadcrumbs">
             <div class="col-sm-4">
                 <div class="page-header float-left">
                     <div class="page-title">
-                        <h1>Manage Category</h1>
+                        <h1>Expanses Section</h1>
                     </div>
                 </div>
             </div>
@@ -27,7 +33,7 @@
                 <div class="page-header float-right">
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
-                            <li class="active"><a class="btn btn-info btn-sm" href="{{route('create.category')}}">Add Category</a></li>
+                            <li class="active"><a class="btn btn-info btn-sm" href="{{route('create.expanse')}}">Add Expanse</a></li>
                         </ol>
                     </div>
                 </div>
@@ -47,37 +53,47 @@
         <div class="col-md-12 col-lg-12">
             <div class="animated fadeIn">
                 <div class="row">
-
                     <div class="col-md-12">
                        <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">All Categories</strong>
+                                <strong class="card-title">All Expanses Of {{date('F')}} (Current Month)</strong>
                             </div>
                             <div class="card-body">
-                                <table id="bootstrap-data-table-export" class="table table-sm">
+                                <table id="bootstrap-data-table-export" class="table table-sm table-striped">
                                     <thead>
                                         <tr class="text-center">
-                                            <th>Name</th>
-                                            <th>Type</th>
+                                            <th>Srl No:</th>
+                                            <th>Description</th>
+                                            <th>Date</th>
+                                            <th>Amount</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($categories as $category)
+                                        @foreach ($currentMonthExpanses as $expanse)
                                             <tr class="text-center">
-                                                <td><h6 class="mt-2 text-muted">{{$category->name}}</h6></td>
                                                 <td>
                                                     <h6 class="mt-2 text-muted">
-                                                        {{$category->parent_category_id ? 'Child Categroy' : 'Main Categroy'}}
+                                                        {{$loop->index +1}}
                                                     </h6>
                                                 </td>
                                                 <td>
-                                                        <a class="btn btn-primary btn-sm mt-1" href="{{route('edit.category',$category->id)}}">Edit</a>
-                                                    <button type="button" onclick="deleteCategoryAlert({{$category->id}});" class="btn btn-danger btn-sm mt-1">Delete</button>
-                                                    <form style="display:none;" id="deleteCategoryForm-{{$category->id}}" method="POST" action="{{route('delete.category', $category->id)}}">
-                                                        @csrf
-                                                        @method("DELETE")
-                                                    </form>
+                                                    <h6 class="mt-2 text-muted">
+                                                        {{$expanse->description}}
+                                                    </h6>
+                                                </td>
+                                                <td>
+                                                    <h6 class="mt-2 text-muted">
+                                                        {{$expanse->date}}
+                                                    </h6>
+                                                </td>
+                                                <td>
+                                                    <h6 class="mt-2 text-muted">
+                                                        {{$expanse->amount}}
+                                                    </h6>
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-primary btn-sm mt-1" href="{{route('details.expanse',$expanse->id)}}">Details</a>
                                                 </td>
                                             </tr>
                                         @endforeach                                      
@@ -98,41 +114,7 @@
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 <script>
-        function deleteCategoryAlert(id){
-            const swalWithBootstrapButtons = Swal.mixin({
-                customClass: {
-                  confirmButton: 'btn btn-success',
-                  cancelButton: 'btn btn-danger'
-                },
-                buttonsStyling: false
-              })
-              
-              swalWithBootstrapButtons.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, delete it!',
-                cancelButtonText: 'No, cancel!',
-                reverseButtons: true
-              }).then((result) => {
-                if (result.value) {
-
-                 event.preventDefault();
-                 document.getElementById('deleteCategoryForm-'+id).submit();
-
-                } else if (
-                  /* Read more about handling dismissals below */
-                  result.dismiss === Swal.DismissReason.cancel
-                ) {
-                  swalWithBootstrapButtons.fire(
-                    'Cancelled',
-                    'Your imaginary file is safe :)',
-                    'error'
-                  )
-                }
-              })
-        }
+    
     jQuery(document).ready(function($) {
         $('#bootstrap-data-table-export').DataTable({
             ordering:false,
