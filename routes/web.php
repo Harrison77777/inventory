@@ -79,9 +79,31 @@ Route::group(['prefix' => '/', 'middleware'=> 'auth:web'], function(){
           route::get('of-today', 'ExpanseController@todayExpanse')->name('today.expanse');
           route::post('add', 'ExpanseController@store')->name('add.expanse');
        
-          
      });
      // Expanse route group ended here 
+     
+     // POS route group here
+     Route::group(['prefix'=> 'POS'], function(){
+          route::get('/', 'PosController@index')->name('pos');
+          // route::get('details/{expId}', 'ExpanseController@details')->name('details.expanse');
+          // route::get('create', 'ExpanseController@create')->name('create.expanse');
+          // route::get('of-today', 'ExpanseController@todayExpanse')->name('today.expanse');
+          // route::post('add', 'ExpanseController@store')->name('add.expanse');
+       
+     });
+     // POS route group ended here 
+
+     // Attendance route group here
+     Route::group(['prefix'=> 'attendance'], function(){
+          route::get('/', 'AttendanceController@index')->name('attendance');
+          route::get('take-attendance', 'AttendanceController@takeAttendance')->name('take.attendance');
+          route::post('insert-attendance', 'AttendanceController@insertAttendance')->name('insert.attendance');
+
+          route::get('current-month-of/{currentMonth}', 'AttendanceController@currentMonthAttendance')->name('current.month.attendance');
+          route::get('ByDate/{date}', 'AttendanceController@dateWiseAttendance')->name('datewise.attendance');
+       
+     });
+     // Attendance route group ended here 
 });
 
 Auth::routes();

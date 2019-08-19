@@ -13,7 +13,11 @@ class ExpanseController extends Controller
        
         $month = date('F');
         $currentMonthExpanses = Expanse::where('month', $month)->orderBy('id','desc')->get();
-        return view('expanse.index', compact('currentMonthExpanses'));
+        $totalAmount = 0;
+        foreach ($currentMonthExpanses as $value) {
+            $totalAmount = $totalAmount + $value->amount;
+        }
+        return view('expanse.index', compact('currentMonthExpanses', 'totalAmount'));
     }
     public function create(){
         

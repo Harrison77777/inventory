@@ -18,7 +18,6 @@
         <div class="container">
             <a class="btn btn-success btn-sm ml-3 mb-1" href="{{route('today.expanse')}}">Today all expanses</a>
         </div>
-        
     </div>
     <!-- Header-->
     <div class="breadcrumbs">
@@ -56,7 +55,16 @@
                     <div class="col-md-12">
                        <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">All Expanses Of {{date('F')}} (Current Month)</strong>
+                                <div class="contianer">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <strong class="card-title">All Expanses Of {{date('F')}} (Current Month)</strong>
+                                        </div>
+                                        <div class="col-md-6 text-right">
+                                            <strong class="card-title">Total Amount:</strong> {{number_format($totalAmount, 2)}} TK
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="card-body">
                                 <table id="bootstrap-data-table-export" class="table table-sm table-striped">

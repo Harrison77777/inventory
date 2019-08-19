@@ -14,6 +14,9 @@
                 <li class="{{Request::is('dashboard*') ? 'active' : ''}}">
                     <a style="color:{{Request::is('dashboard*') ? 'red!important;' : ''}}" href="{{route('dashboard')}}"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
                 </li>
+                <li class="{{Request::is('post*') ? 'active' : ''}}">
+                    <a style="color:{{Request::is('pos*') ? 'red!important;' : ''}}" href="{{route('pos')}}"> <i class="menu-icon fa fa-file-o"></i>POS </a>
+                </li>
                 <li class="{{Request::is('employee*') ? 'active' : ''}}">
                     <a style="color:{{Request::is('employee*') ? 'red!important;' : ''}}" href="{{route('employees')}}"> <i class="menu-icon fa fa-users"></i>Manage Employees</a>
                 </li>
@@ -39,6 +42,10 @@
                 </li>
                 <li class="{{Request::is('expanse*') ? 'active' : ''}}">
                 <a style="color:{{Request::is('expanse*') ? 'red!important;' : ''}}" href="{{route('all.expanse')}}"> <i class="menu-icon fa fa-strikethrough"></i>Manage Expanses 
+                </a>
+                </li>
+                <li class="{{Request::is('attendance*') ? 'active' : ''}}">
+                <a style="color:{{Request::is('attendance*') ? 'red!important;' : ''}}" href="{{route('attendance')}}"> <i class="menu-icon fa fa-hand-o-up"></i>Manage Attendance 
                 </a>
                 </li>
             </ul>

@@ -11,28 +11,26 @@
 @endpush
  @section('content')
  <div id="right-panel" class="right-panel">
-
     <!-- Header-->
     @include('partials.dashboard-header')
-    
     <!-- Header-->
     <div class="breadcrumbs">
-            <div class="col-sm-4">
-                <div class="page-header float-left">
-                    <div class="page-title">
-                        <h1>Today All Expanses</h1>
-                    </div>
+        <div class="col-sm-4">
+            <div class="page-header float-left">
+                <div class="page-title">
+                    <h1>Today All Expanses</h1>
                 </div>
             </div>
-            <div class="col-sm-8">
-                <div class="page-header float-right">
-                    <div class="page-title">
-                        <ol class="breadcrumb text-right">
-                            <li class="active"><a class="btn btn-info btn-sm" href="{{route('all.expanse')}}">Back</a></li>
-                        </ol>
-                    </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="page-header float-right">
+                <div class="page-title">
+                    <ol class="breadcrumb text-right">
+                        <li class="active"><a class="btn btn-info btn-sm" href="{{route('all.expanse')}}">Back</a></li>
+                    </ol>
                 </div>
             </div>
+        </div>
     </div>
     <div  class="col-sm-10 offset-1">
         @if (Session::has('successMsg'))
@@ -55,9 +53,8 @@
                                     <strong class="card-title">All Expanses Of {{date('d/m/Y')}} (Today)</strong>
                                 </div>
                                 <div class="col-md-6 text-right">
-                                    <strong>Total Amount: </strong>{{ $totalAmount}}TK
-                                </div>
-                                
+                                    <strong>Total Amount: </strong>{{number_format($totalAmount, 2)}} TK
+                                </div>                                
                             </div>
                             <div class="card-body">
                                 <table id="bootstrap-data-table-export" class="table table-sm table-bordered table-striped">
@@ -71,6 +68,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @if ($todayExpanses->count() > 0)
                                         @foreach ($todayExpanses as $expanse)
                                             <tr class="text-center">
                                                 <td>
@@ -99,14 +97,17 @@
                                                     </h6>
                                                 </td>
                                             </tr>
-                                        @endforeach                                      
+                                        @endforeach 
+                                        @else
+                                        <tr class="text-center">
+                                            <td class="text-center" colspan="5"><strong>Today yet to expanse</strong> </td>
+                                        </tr>                                        
+                                        @endif                                     
                                     </tbody>
                                 </table>
                             </div>
-                        </div> -
+                        </div> 
                     </div>
-
-
                 </div>
             </div><!-- .animated -->
         </div>
@@ -117,13 +118,6 @@
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 <script>
-    
-    {{-- jQuery(document).ready(function($) {
-        $('#bootstrap-data-table-export').DataTable({
-            ordering:false,
-            select: false
-        });
-    }) --}}
-    
+
 </script>
 @endpush
