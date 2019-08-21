@@ -64,6 +64,28 @@ class AttendanceController extends Controller
         $attendances = Attendance::with(['employee'])->where('date', $date)->get();
         return view('attendance.date_wise_attendance', compact('attendances', 'showDate'));
     }
+    public function editAttendance($date)
+    {   $showDate = $date;
+        $attendances = Attendance::with('employee')->where('date', $date)->get();
+        return view('attendance.edit_attendance', compact('attendances', 'showDate'));
+    }
+    public function updateAttendance($date, Request $request)
+    {
+      
+        
+            foreach ($request->attendance as $key => $value) {
+                $updateAttendance = Attendance::where('date', $date)->where('id', $key)->first();
+                $updateAttendance->attend = $value;
+                $updateAttendance->save();
+                
+
+            }
+            
+        \session()->flash('successMsg', ' successFully updated the attendance of '.$date);
+         return redirect()->route('datewise.attendance', $date);
+        
+
+    }
 
     
 }

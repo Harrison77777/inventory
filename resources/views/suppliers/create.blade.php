@@ -192,7 +192,8 @@
                 var errors = data.errorMsg;
                 if($.isEmptyObject(data.errorMsg)){
                     $('.errorMsg').hide(); 
-                    $('.successMsg').show();
+                    $('.successMsg').hide(500);
+                    $('.successMsg').show(500);
                     var name = $('#name').val('');
                     var city = $('#email').val('');
                     var address = $('#address').val('');
@@ -203,8 +204,8 @@
                     var type = $('#type').val('');
                     $('.message').html(data.successMsg);
                 }else{
-                     $('.successMsg').hide(); 
-                     $('.errorMsg').show(); 
+                     $('.successMsg').hide(500); 
+                     $('.errorMsg').show(500); 
                      var AllError = "";
                     $.each(errors,function(key, error){
                         AllError +=error + "<br/>";

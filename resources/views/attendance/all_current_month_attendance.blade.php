@@ -44,7 +44,7 @@
                     <div class="col-md-12">
                         <div class="row">
                             @foreach ($dates as $date)
-                            <div class="col-md-3">
+                            <div class="col-md-2">
     <a class="btn btn-success btn-sm" href="{{route('datewise.attendance',$date->date)}}">Attendance of {{$date->date}}</a>
                             </div> 
                             @endforeach

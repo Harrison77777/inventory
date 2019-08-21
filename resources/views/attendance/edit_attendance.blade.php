@@ -19,7 +19,7 @@
         <div class="col-sm-4">
             <div class="page-header float-left">
                 <div class="page-title">
-                    <h1>Take Attendance Section</h1>
+                    <h1>Edit Attendance of {{$showDate}}</h1>
                 </div>
             </div>
         </div>
@@ -27,7 +27,7 @@
             <div class="page-header float-right">
                 <div class="page-title">
                     <ol class="breadcrumb text-right">
-                        <li class="active"><a class="btn btn-info btn-sm" href="{{route('attendance')}}">Back</a></li>
+                        <li class="active"><a class="btn btn-info btn-sm" href="{{route('datewise.attendance', $showDate)}}">Back</a></li>
                     </ol>
                 </div>
             </div>
@@ -56,11 +56,12 @@
             <div class="animated fadeIn">
                 <div class="row">
                     <div class="col-md-12">
-                    <form action="{{route('insert.attendance')}}" method="POST">
+                    <form action="{{route('update.attendance',$showDate)}}" method="POST">
                         @csrf
+                        @method("PATCH")
                        <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">All Categories</strong>
+                                <strong class="card-title">Edit attendance Form</strong>
                             </div>                           
                             <div class="card-body">
                                 <table id="bootstrap-data-table-export" class="table table-sm">
@@ -73,17 +74,18 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($employees as $employee)
+                                        @foreach ($attendances as $attendance)
                                             <tr class="text-center">
-                                                <td><h6 class="mt-2 text-muted">{{$employee->name}}</h6></td>
+                                                
+                                                <td><h6 class="mt-2 text-muted">{{$attendance->employee->name}}</h6></td>
                                                 <td>
-                                                    <img height="40" width="50" src="{{asset('storage/employeesPhoto/'.$employee->photo)}}" alt="">
+                                                    <img height="40" width="50" src="{{asset('storage/employeesPhoto/'.$attendance->employee->photo)}}" alt="">
                                                 </td>
-                                                <td><h6 class="mt-2 text-muted">{{$date}}</h6></td>
+                                                <td><h6 class="mt-2 text-muted">{{$attendance->date}}</h6></td>
                                                 <td>
                                                     <h6 class="mt-2 text-muted">
-                                                    <input type="radio" required name="attendance[{{$employee->id}}]" value="Present"> Present
-                                                    <input type="radio" required name="attendance[{{$employee->id}}]" value="Absence"> Absence
+                                                    <input {{$attendance->attend == "Present" ? "Checked" : ''}} type="radio" required name="attendance[{{$attendance->id}}]" value="Present"> Present
+                                                    <input {{$attendance->attend == "Absence" ? "Checked" : ''}}  type="radio" required name="attendance[{{$attendance->id}}]" value="Absence"> Absence
                                                     </h6>
                                                 </td>
                                             </tr>                                                

@@ -83,7 +83,7 @@ Route::group(['prefix' => '/', 'middleware'=> 'auth:web'], function(){
      // Expanse route group ended here 
      
      // POS route group here
-     Route::group(['prefix'=> 'POS'], function(){
+     Route::group(['prefix'=> 'pos'], function(){
           route::get('/', 'PosController@index')->name('pos');
           // route::get('details/{expId}', 'ExpanseController@details')->name('details.expanse');
           // route::get('create', 'ExpanseController@create')->name('create.expanse');
@@ -101,6 +101,8 @@ Route::group(['prefix' => '/', 'middleware'=> 'auth:web'], function(){
 
           route::get('current-month-of/{currentMonth}', 'AttendanceController@currentMonthAttendance')->name('current.month.attendance');
           route::get('ByDate/{date}', 'AttendanceController@dateWiseAttendance')->name('datewise.attendance');
+          route::get('edit/{date}', 'AttendanceController@editAttendance')->name('edit.attendance');
+          route::patch('update/{date}', 'AttendanceController@updateAttendance')->name('update.attendance');
        
      });
      // Attendance route group ended here 

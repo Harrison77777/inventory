@@ -179,8 +179,9 @@ jQuery(document).ready(function($) {
             success:function(data){
                 var errors = data.errorMsg;
                 if($.isEmptyObject(data.errorMsg)){
-                    $('.errorMsg').hide(); 
-                    $('.successMsg').show(); 
+                    $('.errorMsg').hide(500); 
+                    $('.successMsg').hide(500);
+                    $('.successMsg').show(500);
                     $('.message').html(data.successMsg);
                     var name = $('#name').val('');
                     var email = $('#email').val('');
@@ -191,8 +192,8 @@ jQuery(document).ready(function($) {
                     var experience = $('#experience').val('');
                     var photo = $('#image-upload').val(''); 
                 }else{
-                     $('.successMsg').hide(); 
-                     $('.errorMsg').show(); 
+                     $('.successMsg').hide(500); 
+                     $('.errorMsg').show(500); 
                     $.each(errors,function(key, error){
                         $('.ErrorMessage').html(error);
                     }) 

@@ -24,6 +24,24 @@
                 </div>
             </div> 
     </div>
+    <div  class="col-sm-10 offset-1">
+            @if (Session::has('successMsg'))
+            <div class="alert  alert-success alert-dismissible fade show" role="alert">
+                <span class="badge badge-pill badge-success">Success</span> <span class="message">{{session('successMsg')}}</span> 
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @endif
+            @if (Session::has('errorMsg'))
+            <div class="alert  alert-danger alert-dismissible fade show" role="alert">
+                <span class="badge badge-pill badge-danger">Error</span> <span class="message">{{session('errorMsg')}}</span> 
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @endif
+        </div>
     <div class="content">
         <div class="col-md-12 col-lg-12">
             <div class="animated fadeIn">
@@ -37,6 +55,7 @@
                                         <strong class="card-title">All Employees Attendance Of {{$showDate}}</strong>
                                     </div>
                                     <div class="col-md-6 text-right">
+                                        <a class="btn btn-sm btn-info" href="{{route('edit.attendance',$showDate)}}">Edit</a>
                                         <a class="btn btn-sm btn-info" href="{{route('current.month.attendance',date('F'))}}">Back</a>
                                     </div>
                                 </div>

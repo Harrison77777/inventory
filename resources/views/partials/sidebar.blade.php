@@ -15,7 +15,7 @@
                     <a style="color:{{Request::is('dashboard*') ? 'red!important;' : ''}}" href="{{route('dashboard')}}"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
                 </li>
                 <li class="{{Request::is('post*') ? 'active' : ''}}">
-                    <a style="color:{{Request::is('pos*') ? 'red!important;' : ''}}" href="{{route('pos')}}"> <i class="menu-icon fa fa-file-o"></i>POS </a>
+                    <a style="color:{{Request::is('pos*') ? 'red!important;' : ''}}" href="{{route('pos')}}"> <i class="menu-icon fa fa-file-o"></i>Point Of Sale</a>
                 </li>
                 <li class="{{Request::is('employee*') ? 'active' : ''}}">
                     <a style="color:{{Request::is('employee*') ? 'red!important;' : ''}}" href="{{route('employees')}}"> <i class="menu-icon fa fa-users"></i>Manage Employees</a>
