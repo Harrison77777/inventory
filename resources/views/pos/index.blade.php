@@ -1,6 +1,7 @@
 @extends('layouts.master')
 @push('css')
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="{{asset('application_css_js/toastr.min.css')}}">
 <style>
     .paginate_button {
         color: red;
@@ -9,7 +10,7 @@
     }
     input.qty {
         height: 27px;
-        width: 49px;
+        width: 50px;
     }
     td.qty-area {
         display: flex;
@@ -25,32 +26,42 @@
         padding-right: 5px;
         border-radius: 2px;
     }
+    tbody.showAllPropareProducts form {
+        width: 50px;
+    }
+    
+    .margin {
+        margin-left: -4px;
+    }
 </style>
 @endpush
  @section('content')
  <div id="right-panel" class="right-panel">
-
+{{--  Hidden input field for geting all prepare products  --}}
+<input class="getPrepareProductsUrl" type="hidden" value="{{route('get.all.prepare.products')}}">
+{{--  Hidden input field for geting all prepare products  --}}
     <!-- Header-->
     @include('partials.dashboard-header')
     <!-- Header-->
     <div class="breadcrumbs">
-            <div class="col-sm-4">
-                <div class="page-header float-left">
-                    <div class="page-title">
-                        <h1>Point of sale (POS)</h1>
-                    </div>
+        <div class="col-sm-4">
+            <div class="page-header float-left">
+                <div class="page-title">
+                    <h1>Point of sale (POS)</h1>
                 </div>
             </div>
-            <div class="col-sm-8">
-                <div class="page-header float-right">
-                    <div class="page-title">
-                        {{--  <ol class="breadcrumb text-right">
-                            <li class="active"><a class="btn btn-info btn-sm" href="{{route('create.product')}}">Add Product</a></li>
-                        </ol>  --}}
-                    </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="page-header float-right">
+                <div class="page-title">
+                    {{--  <ol class="breadcrumb text-right">
+                        <li class="active"><a class="btn btn-info btn-sm" href="{{route('create.product')}}">Add Product</a></li>
+                    </ol>  --}}
                 </div>
             </div>
+        </div>
     </div>
+
     <div  class="col-sm-10 offset-1">
         @if (Session::has('successMsg'))
         <div class="alert  alert-success alert-dismissible fade show" role="alert">
@@ -65,12 +76,13 @@
         
         <div class="col-md-12 col-lg-12">
             <div class="animated fadeIn">
-                <div class="row">
-                    <div class="col-md-5">
+                <div class="row no-gutters">
+                    <div class="col-md-6">
                         <div class="heading">
                             <h5 class="mb-1">Customer information</h5>
                         </div>
-                        <form action="">
+                        <form method="POST" action="{{route('confirm.product')}}">
+                            @csrf
                             <div class="customer-info-area border p-2 rounded" >
                                 <div class="form-group">
                                     <div class="row no-gutters">
@@ -78,7 +90,8 @@
                                             <label for="name"> Name :</label>
                                         </div>
                                         <div class="col-md-10">
-                                            <input placeholder="Customer name" type="text" name="name" class=" form-control form-control-sm">
+                                            <input placeholder="Customer name" value="{{old('name')}}" type="text" name="name" class=" form-control form-control-sm">
+                                            <p class="text-danger mb-0">{{$errors->first('name')}}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -88,7 +101,8 @@
                                             <label for="email">E-Mail  :</label>
                                         </div>
                                         <div class="col-md-10">
-                                            <input placeholder="Customer e-mail" type="text" name="email" class=" form-control form-control-sm">
+                                            <input placeholder="Customer e-mail" value="{{old('email')}}" type="text" name="email" class=" form-control form-control-sm">
+                                            <p class="text-danger mb-0">{{$errors->first('email')}}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -98,7 +112,8 @@
                                             <label for="address"> Address :</label>
                                         </div>
                                         <div class="col-md-10">
-                                            <textarea name="address" class=" form-control form-control-sm m-0" placeholder="Customer address" id="address" cols="15" rows="2"></textarea>
+                                            <textarea name="address" class=" form-control form-control-sm m-0" placeholder="Customer address" id="address" cols="15" rows="2">{{old('address')}}</textarea>
+                                            <p class="text-danger mb-0">{{$errors->first('address')}}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -110,7 +125,8 @@
                                 <div class="added-product-table">
                                     <table class="table table-sm table-bordered">
                                         <thead>
-                                            <tr>
+                                            <tr> 
+                                               <th>Del</th>
                                                 <th>Pro Name</th>
                                                 <th>Brand</th>
                                                 <th>Cat</th>
@@ -119,87 +135,37 @@
                                                 <th>Total Price</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody class="showAllPropareProducts">
                                             <tr>
-                                                <td>Toyota Crolla</td>
+                                                
+                                                <td>Name</td>
                                             
-                                                <td>Toyota</td>
+                                                <td>Brand</td>
                                             
-                                                <td>Car</td>
+                                                <td>Category</td>
                                                 <td class="qty-area">
                                                    
-                                                    <input  class=" qty form-control form-control-sm" type="number" name='quantiy'> 
+                                                    <input class=" qty form-control form-control-sm" type="number" name='quantiy'> 
                                                         <a class="btn-sm btn-info btn ml-2 btn-s" href=""><i class="fa fa-plus"></i></a>
                                                 </td>
-                                                <td>2000.00</td>
-                                                <td>2000.00</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Toyota Crolla</td>
-                                            
-                                                <td>Toyota</td>
-                                            
-                                                <td>Car</td>
-                                                <td class="qty-area">
-                                                   
-                                                    <input  class=" qty form-control form-control-sm" type="number" name='quantiy'> 
-                                                        <a class="btn-sm btn-info btn ml-2 btn-s" href=""><i class="fa fa-plus"></i></a>
-                                                </td>
-                                                <td>2000.00</td>
-                                                <td>2000.00</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Toyota Crolla</td>
-                                            
-                                                <td>Toyota</td>
-                                            
-                                                <td>Car</td>
-                                                <td class="qty-area">
-                                                   
-                                                    <input  class=" qty form-control form-control-sm" type="number" name='quantiy'> 
-                                                        <a class="btn-sm btn-info btn ml-2 btn-s" href=""><i class="fa fa-plus"></i></a>
-                                                </td>
-                                                <td>2000.00</td>
-                                                <td>2000.00</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Toyota Crolla</td>
-                                            
-                                                <td>Toyota</td>
-                                            
-                                                <td>Car</td>
-                                                <td class="qty-area">
-                                                   
-                                                    <input  class=" qty form-control form-control-sm" type="number" name='quantiy'> 
-                                                        <a class="btn-sm btn-info btn ml-2 btn-s" href=""><i class="fa fa-plus"></i></a>
-                                                </td>
-                                                <td>2000.00</td>
-                                                <td>2000.00</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Toyota Crolla</td>
-                                            
-                                                <td>Toyota</td>
-                                            
-                                                <td>Car</td>
-                                                <td class="qty-area">
-                                                   
-                                                    <input  class=" qty form-control form-control-sm" type="number" name='quantiy'> 
-                                                        <a class="btn-sm btn-info btn ml-2 btn-s" href=""><i class="fa fa-plus"></i></a>
-                                                </td>
-                                                <td>2000.00</td>
-                                                <td>2000.00</td>
+                                                <td>price</td>
+                                                <td>Total price</td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div> 
+                            <div class="total-amount-section border text-right clearfix">
+                                <h6 class="float-right">Total : <span class="text-danger total-amount"></span>  TK.</h6><br>
+                                <h6 class="float-right">Vat : <span class="text-danger">10%</span>  TK.</h6><br>
+                                <h6 class="float-right">Grand Total : <span class="text-danger grand-total">10%</span>  TK.</h6>
+                            </div>
                             <div class="create-invoice-button-area">
                                 <button type="submit" class="btn btn-success btn-sm">Create Invoice</button>
                             </div>                          
                         </form>
                     </div>
-                    <div class="col-md-7">
+                    <div class="col-md-6">
                        <div class="card">
                             <div class="card-header">
                                 <strong class="card-title">All Products</strong>
@@ -242,62 +208,216 @@
                                                 </td>
                                                 <td>
                                                     <h6 class="mt-2 text-muted">
-                                                        <a class="btn btn-sm btn-success" href="{{$product->id}}"><i class="ti ti-shopping-cart-full"></i></a>
-                                                    </h6>
+                                                        <a
+                                                         class="btn btn-sm prepareProduct btn-success" data-id="{{$product->id}}" href="{{route('prepare.to.sale')}}"><i class="ti ti-shopping-cart-full"></i>
+                                                        </a>
+                                                    </h6>                                               
                                                 </td>
                                             </tr>
                                         @endforeach                                      
                                     </tbody>
                                 </table>
                             </div>
-                        </div> -
+                        </div>
                     </div>
                 </div>
             </div><!-- .animated -->
         </div>
-    </div> <!-- .content -->
+    </div> <!-- .content <-->
+    <a href=""></a>
 </div><!-- /#right-panel -->
 @endsection
 @push('js')
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+<script src="{{asset('application_css_js/toastr.min.js')}}"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+
 <script>
-        function deleteProductrAlert(id){
-            const swalWithBootstrapButtons = Swal.mixin({
-                customClass: {
-                  confirmButton: 'btn btn-success',
-                  cancelButton: 'btn btn-danger'
-                },
-                buttonsStyling: false
-              })
-              
-              swalWithBootstrapButtons.fire({
-                title: 'Are you sure to delete?',
-                text: "You won't be able to revert this!",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, delete it!',
-                cancelButtonText: 'No, cancel!',
-                reverseButtons: true
-              }).then((result) => {
-                if (result.value) {
-
-                 event.preventDefault();
-                 document.getElementById('deleteProductForm-'+id).submit();
-
-                } else if (
-                  /* Read more about handling dismissals below */
-                  result.dismiss === Swal.DismissReason.cancel
-                ) {
-                  swalWithBootstrapButtons.fire(
-                    'Cancelled',
-                    'Your imaginary file is safe :)',
-                    'error'
-                  )
-                }
-              })
-        }
+       
     jQuery(document).ready(function($) {
+
+        $.ajaxSetup({
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+          });
+
+          $(document).on('click', '.prepareProduct', function(event){
+            event.preventDefault();
+            var url = $(this).attr('href');
+            var productId = $(this).data('id');
+            $.ajax({
+                url:url,
+                type:'post',
+                data:{productId:productId},
+                dataType:'json',
+                success:function(data){
+                    getAllPropareProducts();
+                    if($.isEmptyObject(data.errorMsg)){
+                        toastr.options = {
+                            "closeButton": true,
+                            "debug": false,
+                            "newestOnTop": true,
+                            "progressBar": true,
+                            "positionClass": "toast-top-right",
+                            "preventDuplicates": false,
+                            "onclick": null,
+                            "showDuration": "100",
+                            "hideDuration": "1000",
+                            "timeOut": "1000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                            }
+                        Command: toastr["success"](data.successMsg)
+                        
+                    }else{
+                        toastr.options = {
+                            "closeButton":true,
+                            "debug": false,
+                            "newestOnTop":true,
+                            "progressBar":true,
+                            "positionClass": "toast-top-right",
+                            "preventDuplicates":false,
+                            "onclick": null,
+                            "showDuration": "100",
+                            "hideDuration": "1000",
+                            "timeOut": "1000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                            }
+                        Command: toastr["error"](data.errorMsg) 
+                    }
+                }
+            })
+          })
+        
+
+          function getAllPropareProducts(){
+              var getProductUrl = $('.getPrepareProductsUrl').val();
+              $.ajax({
+                  url: getProductUrl,
+                  type:'get',
+                  dataType:'json',
+                  success:function(data){
+                      var allPrepareProducts = data.prepareProducts;
+                      
+                      var showProducts = '';
+                      var totalPrice = 0;
+                       $.each(allPrepareProducts, function(key,prepareProduct){
+                        showProducts +=  '<tr>';
+                        showProducts += '<td>';
+                        showProducts +='<a class="btn btn-danger btn-sm btn-s pb-1 deleteProductFormPos" data-id="'+prepareProduct.id+'" href="{{route('del.pro.from.pos')}}"> x </a>';
+                        showProducts +='</td>'; 
+                        showProducts += '<td>'+prepareProduct.product.name+'</td>';
+                        showProducts +=  '<td>'+prepareProduct.product.brand+'</td>';   
+                        showProducts += '<td>'+prepareProduct.product.category.name+'</td>';
+                        showProducts +=  '<td  class="qty-area">';
+
+                showProducts +='<form class="updateQuantityForm" method="POST" action="{{route('update.quantity')}}">';
+                showProducts +='@csrf';
+                showProducts += '<input id="id" type="hidden" class="id" name="id" value="'+prepareProduct.id+'">'; 
+                showProducts += '<div class="row margin">';
+                showProducts += '<input value="'+prepareProduct.quantity+'" id="qty" name="qty" class=" qty form-control form-control-sm" type="number" name="qty">'; 
+                 {{-- showProducts +='<input class="btn-sm btn-success btn" value="+" type="submit">'; --}}
+                  
+                showProducts +='</div>';
+                     
+                showProducts += '</form>';
+                showProducts += '<button type="button" class="btn-sm btn-success btn btn-s" ><i class="fa fa-plus"></i></button>';
+               
+                showProducts += '</td>';
+                showProducts +='<td>'+parseInt(prepareProduct.product.price).toLocaleString()+'</td>';
+                showProducts += '<td>'+parseInt(prepareProduct.product.price * prepareProduct.quantity).toLocaleString()+'</td>';
+                showProducts += '</tr>';
+                totalPrice = totalPrice + prepareProduct.product.price * prepareProduct.quantity;
+                 
+                        }) 
+                      $('.showAllPropareProducts').html(showProducts);  
+                      $('.total-amount').html(parseInt(totalPrice).toLocaleString()+'.00'); 
+                     
+                      $('.grand-total').html(parseInt(totalPrice * 0.10 + totalPrice).toLocaleString()+'.00');
+                       
+                  }
+              });
+          }
+          getAllPropareProducts();
+
+          $(document).on("blur", ".updateQuantityForm", function(e){
+            e.preventDefault();
+              
+              var url = $(this).attr('action');
+              var method = $(this).attr('method');
+              $.ajax({
+                  url:url,
+                  type:method,
+                  data:$(this).serialize(),
+                  dataType:'json',
+                  success:function(data){
+                      getAllPropareProducts();
+                      toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": true,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "100",
+                        "hideDuration": "1000",
+                        "timeOut": "1000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                        }
+                      Command: toastr["success"](data.successMsg)                    
+                  }
+              }); 
+              
+          })
+
+           $(document).on('click', '.deleteProductFormPos',function(event){
+              event.preventDefault();
+              var proId = $(this).data('id');
+              var url = $(this).attr('href');
+              $.ajax({
+                  url:url,
+                  type:'POST',
+                  data:{proId:proId},
+                  dataType:'json',
+                  success:function(data){
+                    getAllPropareProducts();
+                     toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": true,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "100",
+                        "hideDuration": "1000",
+                        "timeOut": "1000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                        }
+                      Command: toastr["success"](data.successMsg)
+                  }
+              });
+          }); 
+          
+
         $('#bootstrap-data-table-export').DataTable({
             ordering:false,
             select: false

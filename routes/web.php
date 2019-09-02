@@ -85,13 +85,33 @@ Route::group(['prefix' => '/', 'middleware'=> 'auth:web'], function(){
      // POS route group here
      Route::group(['prefix'=> 'pos'], function(){
           route::get('/', 'PosController@index')->name('pos');
-          // route::get('details/{expId}', 'ExpanseController@details')->name('details.expanse');
-          // route::get('create', 'ExpanseController@create')->name('create.expanse');
-          // route::get('of-today', 'ExpanseController@todayExpanse')->name('today.expanse');
-          // route::post('add', 'ExpanseController@store')->name('add.expanse');
+          
+          route::post('prepare', 'PosController@prepareProductToSale')->name('prepare.to.sale');
+          route::post('update/quantity', 'PosController@updateQuantity')->name('update.quantity');
+          route::post('deleteProFromPos', 'PosController@deleteProFromPos')->name('del.pro.from.pos');
+          route::get('All/prepareProduct', 'PosController@getAllPrepareProducts')->name('get.all.prepare.products');
+          route::post('conform/product', 'PosController@confirmProduct')->name('confirm.product');
        
      });
      // POS route group ended here 
+
+     // Sales reports route group here
+     Route::group(['prefix'=>'salesReport'], function(){
+          route::get('/', 'SalesReportController@index')->name('salesReport');
+          route::get('particular/customer/product/{customerId}', 'SalesReportController@todayParticularCustomerBuyDetails')->name('today.particular.cus.pro');
+          route::get('yesterday-all-sale-according-to-customer','SalesReportController@yesterdayAllBuyerCustomer')->name('yesterday.all.sale');
+          route::get('yester/particular/customer/buying/details/{customerId}', 'SalesReportController@yesterdayParticularCustomerBuyDetails')->name('yesterday.particular.customer.buy.details');
+          route::get('current-month-all-sale-details-by-date', 'SalesReportController@currentMonthAllSale')->name('current.month.all.sale');
+          route::get('current-month-dateWise-selling-details/{date}', 'SalesReportController@currentMonthDateWiseCustomer')->name('current.month.datewise.all.buyer.customer');
+          route::get('current-month-date-wise-particular-customer-buying-details/{customerId}', 'SalesReportController@currentMonthParticularCusBuyDetails')->name('current.month.particular.customer.buy.details');
+          route::get('sales-reports-of-all-months', 'SalesReportController@salesReportsOfAllMonth')->name('sales.reports.of.all.month');
+          route::get('particular-month-wise-all-selling-date/{month}', 'SalesReportController@particularMonthWiseAllSellingDate')->name('particular.month.wise.all.selling.date');
+          route::get('particular-month-particular-date-wise-all-customer/{date}', 'SalesReportController@particularMonthParticularDateWiseCustomers')->name('particular.month.particular.month.wise.all.customer');
+          route::get('perticular-month-particular-date-wise-customer-buying-details/{customerId}','SalesReportController@perticular_month_particular_date_wise_customer_buying_details')->name('perticular.month.particular.date.wise.customer.buying.details');
+     });
+     // Sales reports route group ended here
+
+
 
      // Attendance route group here
      Route::group(['prefix'=> 'attendance'], function(){
