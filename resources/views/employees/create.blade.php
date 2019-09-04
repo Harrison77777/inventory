@@ -135,6 +135,14 @@
                             <span class="badge badge-pill"></span> <span class="ErrorMessage"></span> 
                         </div>
                     </div>
+                    <div style="display:none;" class="col-sm-12 successMsg">
+                        <div class="alert  alert-success alert-dismissible fade show" role="alert">
+                            <span class="badge badge-pill badge-success">Success</span> <span class="message">You successfully read this important alert message.</span> 
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

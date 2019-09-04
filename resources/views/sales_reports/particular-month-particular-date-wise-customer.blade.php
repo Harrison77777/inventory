@@ -99,10 +99,7 @@
                 </div>
                 </a>
               @endforeach
-              
                <input class="total" type="hidden" value="{{$final = $TotalSaleAmountOfThisDate }}">   
-                 
-              
             </div><!-- .animated -->
         </div>
     </div> <!-- .content -->

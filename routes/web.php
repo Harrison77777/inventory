@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +29,6 @@ Route::group(['prefix' => '/', 'middleware'=> 'auth:web'], function(){
           route::get('details/{customerId}', 'CustomerController@details')->name('details.customer');
      });
      //Customer all route ended here.
-
      //Supplier all route group
      Route::group(['prefix'=> 'supplier'], function(){
           route::get('all', 'SupplierController@index')->name('all.supplier');
@@ -42,7 +41,6 @@ Route::group(['prefix' => '/', 'middleware'=> 'auth:web'], function(){
      });
      
      //Supplier all route group ended here
-
      // Salary manage route group here
      Route::group(['prefix'=> 'salary'], function(){
           route::get('all', 'SalaryController@index')->name('all.salary');
@@ -94,7 +92,6 @@ Route::group(['prefix' => '/', 'middleware'=> 'auth:web'], function(){
        
      });
      // POS route group ended here 
-
      // Sales reports route group here
      Route::group(['prefix'=>'salesReport'], function(){
           route::get('/', 'SalesReportController@index')->name('salesReport');
@@ -110,15 +107,11 @@ Route::group(['prefix' => '/', 'middleware'=> 'auth:web'], function(){
           route::get('perticular-month-particular-date-wise-customer-buying-details/{customerId}','SalesReportController@perticular_month_particular_date_wise_customer_buying_details')->name('perticular.month.particular.date.wise.customer.buying.details');
      });
      // Sales reports route group ended here
-
-
-
      // Attendance route group here
      Route::group(['prefix'=> 'attendance'], function(){
           route::get('/', 'AttendanceController@index')->name('attendance');
           route::get('take-attendance', 'AttendanceController@takeAttendance')->name('take.attendance');
           route::post('insert-attendance', 'AttendanceController@insertAttendance')->name('insert.attendance');
-
           route::get('current-month-of/{currentMonth}', 'AttendanceController@currentMonthAttendance')->name('current.month.attendance');
           route::get('ByDate/{date}', 'AttendanceController@dateWiseAttendance')->name('datewise.attendance');
           route::get('edit/{date}', 'AttendanceController@editAttendance')->name('edit.attendance');
@@ -126,8 +119,11 @@ Route::group(['prefix' => '/', 'middleware'=> 'auth:web'], function(){
        
      });
      // Attendance route group ended here 
+     
+     Route::group(['prefix' => 'user'], function() {
+         route::get('create-user', 'UserController@createUser')->name('create.user');
+         route::post('add/Admin', 'UserController@addAdmin')->name('add.user');
+     });
+     
 });
-
 Auth::routes();
-
-

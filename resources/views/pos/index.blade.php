@@ -61,11 +61,19 @@
             </div>
         </div>
     </div>
-
+    
     <div  class="col-sm-10 offset-1">
         @if (Session::has('successMsg'))
         <div class="alert  alert-success alert-dismissible fade show" role="alert">
             <span class="badge badge-pill badge-success">Success</span> <span class="message">{{session('successMsg')}}</span> 
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        @endif
+        @if (Session::has('errorMsg'))
+        <div class="alert  alert-danger alert-dismissible fade show" role="alert">
+            <span class="badge badge-pill badge-danger">Error</span> <span class="message">{{session('errorMsg')}}</span> 
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -155,7 +163,7 @@
                                     </table>
                                 </div>
                             </div> 
-                            <div class="total-amount-section border text-right clearfix">
+                            <div class="total-amount-section border text-right clearfix pr-1 py-1">
                                 <h6 class="float-right">Total : <span class="text-danger total-amount"></span>  TK.</h6><br>
                                 <h6 class="float-right">Vat : <span class="text-danger">10%</span>  TK.</h6><br>
                                 <h6 class="float-right">Grand Total : <span class="text-danger grand-total">10%</span>  TK.</h6>
@@ -324,7 +332,7 @@
                 showProducts +='@csrf';
                 showProducts += '<input id="id" type="hidden" class="id" name="id" value="'+prepareProduct.id+'">'; 
                 showProducts += '<div class="row margin">';
-                showProducts += '<input value="'+prepareProduct.quantity+'" id="qty" name="qty" class=" qty form-control form-control-sm" type="number" name="qty">'; 
+                showProducts += '<input value="'+prepareProduct.quantity+'" id="qty" name="qty" class=" qty form-control form-control-sm" type="text" name="qty">'; 
                  {{-- showProducts +='<input class="btn-sm btn-success btn" value="+" type="submit">'; --}}
                   
                 showProducts +='</div>';

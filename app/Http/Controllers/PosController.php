@@ -59,29 +59,38 @@ class PosController extends Controller
         'email' => 'required|email',
         'address' => 'required'
     ]);
-    date_default_timezone_set('Asia/Dhaka');
-    $addBuyer_customer = new BuyerCustomer();
-    $addBuyer_customer->name = $request->name;
-    $addBuyer_customer->email = $request->email;
-    $addBuyer_customer->address = $request->address;
-    $addBuyer_customer->date = date('d-m-Y');
-    $addBuyer_customer->month = date('F');
-    $addBuyer_customer->year = date('Y');
-    $addBuyer_customer->save();
-    $prepareProducts = PrepareProduct::where('status', 1)->get();
-    foreach ($prepareProducts as  $product) {
-        $addConfirmProducts = new ConfirmProduct();
-        $addConfirmProducts->product_id = $product->product_id;
-        $addConfirmProducts->buyer_customer_id = $addBuyer_customer->id;
-        $addConfirmProducts->quantity = $product->quantity;
-        $addConfirmProducts->date = date('d-m-Y');
-        $addConfirmProducts->month = date('F');
-        $addConfirmProducts->year = date('Y');
-        $addConfirmProducts->save();
+    
+    $productProductValidation = PrepareProduct::where('status', 1)->get();
+    if ($productProductValidation->count() > 0) { 
+        date_default_timezone_set('Asia/Dhaka');
+        $addBuyer_customer = new BuyerCustomer();
+        $addBuyer_customer->name = $request->name;
+        $addBuyer_customer->email = $request->email;
+        $addBuyer_customer->address = $request->address;
+        $addBuyer_customer->date = date('d-m-Y');
+        $addBuyer_customer->month = date('F');
+        $addBuyer_customer->year = date('Y');
+        $addBuyer_customer->save();
+        $prepareProducts = PrepareProduct::where('status', 1)->get();
+        foreach ($prepareProducts as  $product) {
+            $addConfirmProducts = new ConfirmProduct();
+            $addConfirmProducts->product_id = $product->product_id;
+            $addConfirmProducts->buyer_customer_id = $addBuyer_customer->id;
+            $addConfirmProducts->quantity = $product->quantity;
+            $addConfirmProducts->date = date('d-m-Y');
+            $addConfirmProducts->month = date('F');
+            $addConfirmProducts->year = date('Y');
+            $addConfirmProducts->save();
+        }
+        foreach ($prepareProducts as $key => $delPro) {
+            $delPro->delete(); 
+        }
+        $CustomerInvoice = BuyerCustomer::with(['confirmProducts', 'confirmProducts.product'])->where('id', $addBuyer_customer->id)->first();
+        return view('invoice.template',compact('CustomerInvoice'));
+    }else {
+        \session()->flash('errorMsg', 'You did not add any product in the sales point.');
+        return \redirect()->back();  
     }
-    foreach ($prepareProducts as $key => $delPro) {
-        $delPro->delete(); 
-    }
-    return \redirect()->back();
+   
    }
 }

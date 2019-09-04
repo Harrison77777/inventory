@@ -90,7 +90,7 @@
                 <div class="user-menu dropdown-menu">
                     <a class="nav-link" href="#"><i class="fa fa-user"></i> My Profile</a>
 
-                    <a class="nav-link" href=""><i class="fa fa-user"></i> Create user</a>
+                    <a class="nav-link" href="{{route('create.user')}}"><i class="fa fa-user"></i> Create user</a>
 
                     <a class="nav-link" href="#"><i class="fa fa-cog"></i> Settings</a>
 
