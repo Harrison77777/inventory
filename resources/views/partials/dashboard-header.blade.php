@@ -88,12 +88,11 @@
                 </a>
 
                 <div class="user-menu dropdown-menu">
-                    <a class="nav-link" href="#"><i class="fa fa-user"></i> My Profile</a>
-
-                    <a class="nav-link" href="{{route('create.user')}}"><i class="fa fa-user"></i> Create user</a>
-
+                    <a class="nav-link" href="{{route('profile.show')}}"><i class="fa fa-user"></i> My Profile</a>
+                    @if (Auth::user()->role == 1)
+                    <a class="nav-link" href="{{route('create.user')}}"><i class="fa fa-user"></i> Create user</a> 
+                    @endif
                     <a class="nav-link" href="#"><i class="fa fa-cog"></i> Settings</a>
-
                     <a class="nav-link" onclick="
                     event.preventDefault(); document.getElementById('loguotForm').submit();" href=""><i class="fa fa-power-off"></i> Logout</a>
                     <form id="loguotForm" method="POST" action="{{route('logout')}}">
@@ -121,7 +120,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </header><!-- /header -->

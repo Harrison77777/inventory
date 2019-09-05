@@ -21,6 +21,7 @@ Route::group(['prefix' => '/', 'middleware'=> 'auth:web'], function(){
      route::get('employee/edit/{employeeId}', 'EmployeeController@edit')->name('employee.edit');
      route::post('employee/update/{employeeId}', 'EmployeeController@update')->name('employee.update');
      //Customer all route group
+
      Route::group(['prefix'=> 'customer'], function(){
           route::get('/all', 'CustomerController@index')->name('all.customer');
           route::get('/create', 'CustomerController@create')->name('create.customer');
@@ -29,7 +30,9 @@ Route::group(['prefix' => '/', 'middleware'=> 'auth:web'], function(){
           route::get('details/{customerId}', 'CustomerController@details')->name('details.customer');
      });
      //Customer all route ended here.
+
      //Supplier all route group
+
      Route::group(['prefix'=> 'supplier'], function(){
           route::get('all', 'SupplierController@index')->name('all.supplier');
           route::get('create', 'SupplierController@create')->name('create.supplier');
@@ -107,6 +110,7 @@ Route::group(['prefix' => '/', 'middleware'=> 'auth:web'], function(){
           route::get('perticular-month-particular-date-wise-customer-buying-details/{customerId}','SalesReportController@perticular_month_particular_date_wise_customer_buying_details')->name('perticular.month.particular.date.wise.customer.buying.details');
      });
      // Sales reports route group ended here
+
      // Attendance route group here
      Route::group(['prefix'=> 'attendance'], function(){
           route::get('/', 'AttendanceController@index')->name('attendance');
@@ -123,6 +127,9 @@ Route::group(['prefix' => '/', 'middleware'=> 'auth:web'], function(){
      Route::group(['prefix' => 'user'], function() {
          route::get('create-user', 'UserController@createUser')->name('create.user');
          route::post('add/Admin', 'UserController@addAdmin')->name('add.user');
+         route::get('profile.show', 'UserController@showProfile')->name('profile.show');
+         route::get('change-password-form', 'UserController@changePasswordForm')->name('show.change.password.form');
+         route::post('change/password', 'UserController@changePassword')->name('change.password');
      });
      
 });
